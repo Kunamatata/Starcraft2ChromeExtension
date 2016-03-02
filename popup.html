@@ -3,18 +3,32 @@
 
 <head>
     <title>Starcraft 2 Ranking</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
-    <div id="container">
+    <div id="container-extension">
+        <navbar id="nav">
+            <select id="select-broadcaster-language">
+                <option value="" disabled selected>Select Broadcasting Language</option>
+                <option value="fr">French</option>
+                <option value="en">English</option>
+            </select>
+            <i class="fa fa-cog fa-lg" id="option-icon"></i>
+        </navbar>
+        <div id="stream-results"></div>
         <div class="spinner">
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
         </div>
     </div>
-    <script src="jquery.min.js"></script>
-    <script type="text/javascript" src="popup.js"></script>
+    <div id="option-popup">
+        <i class="fa fa-times fa-lg" id="close-popup"></i>
+        <input type="checkbox" id="checkbox-get-notified"></div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
 </body>
 
 </html>

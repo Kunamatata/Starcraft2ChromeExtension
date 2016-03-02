@@ -1,20 +1,15 @@
 {
     "name": "Starcraft2FrStreams",
-    "version": "1.0",
+    "version": "0.0.1",
     "manifest_version": 2,
     "description": "Get the list of french streamers",
-
     "browser_action": {
-        "default_icon": "icon.png",
+        "default_icon": "img/icon.png",
         "default_popup": "popup.html"
     },
-    "content_scripts": [{
-        "css": ["style.css"],
-        "js": ["jquery.min.js"],
-        "matches": ["http://*/*", "https://*/*"]
-    }],
     "permissions": [
         "https://api.twitch.tv/*",
-        "notifications"
+        "notifications",
+        "storage"
     ]
 }
