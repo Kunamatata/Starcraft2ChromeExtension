@@ -135,6 +135,15 @@ body {
     top: 20px;
 }
 
+.fa.fa-star:hover{
+    cursor: pointer;
+    color: #f1c40f;
+}
+
+.active-star{
+    color: #f1c40f;
+}
+
 
 /***************************************
 
