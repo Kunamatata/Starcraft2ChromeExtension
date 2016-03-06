@@ -6,6 +6,7 @@ $(document).ready(function() {
     var notifiedWhenOnline;
 
     //localstroage array
+    
     var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
     if(notifiedList == null)
         notifiedList = [];
@@ -106,12 +107,13 @@ $(document).ready(function() {
                     }
             },
             error: function(res) {
-                $("#container").append("failed");
+                console.log("Are you sure to be connected?")
             },
             complete: function(res) {
                 $(".spinner").hide();
                 $(".stream").css('opacity', '1');
             },
+            timeout: 5000
         });
     };
 
