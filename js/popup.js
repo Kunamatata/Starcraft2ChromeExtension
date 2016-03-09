@@ -92,12 +92,25 @@ $(document).ready(function() {
                         liveBroadcasterLanguageStreams.push(stream);
                 }
                 console.log(liveBroadcasterLanguageStreams);
+                var htmlContent = '';
                 for (stream of liveBroadcasterLanguageStreams) {
                     console.log(stream);
-                    $("#stream-results").append('<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i></div>');
-                    //Race icon if race found in stream status
-                    //stream.channel.status.match("[zZ]erg");
+                    htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>'
+                        //Race icon if race found in stream status
+                    if (stream.channel.status.match("[tT][eE][rR][rR][aA][nN]")) {
+                        htmlContent += '<div class="icon terran"></div>';
+                    }
+                    if (stream.channel.status.match("[zZ][eE][rR][gG]") != null) {
+                        htmlContent += '<div class="icon zerg"></div>';
+                    }
+                    if (stream.channel.status.match("[pP][rR][oO][tT][oO][sS][sS]")) {
+                        htmlContent += '<div class="icon protoss"></div>';
+                    }
+
+                    htmlContent += '</div>';
+
                 }
+                $("#stream-results").html(htmlContent);
                 for (favoriteStream of notifiedList) {
                     var elem = $("[data-stream-name*='" + favoriteStream['stream-name'] + "']");
                     elem.addClass("active-star");

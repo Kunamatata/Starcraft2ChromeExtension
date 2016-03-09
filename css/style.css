@@ -23,7 +23,7 @@ body {
     color: #fff;
     opacity: 0;
     transition: all .3s ease-out;
-    padding: 10px;
+    padding: 5px 10px;
     border-top: 1px solid #ffffff;
     border-bottom: 1px solid #ffffff;
 }
@@ -53,7 +53,7 @@ body {
 
 .stream span {
     display: block;
-    width: 90%;
+    width: 70%;
 }
 
 .stream-title {
@@ -135,12 +135,12 @@ body {
     top: 20px;
 }
 
-.fa.fa-star:hover{
+.fa.fa-star:hover {
     cursor: pointer;
     color: #f1c40f;
 }
 
-.active-star{
+.active-star {
     color: #f1c40f;
 }
 
@@ -155,7 +155,7 @@ body {
     width: 40px;
     height: 40px;
     position: relative;
-    margin: 100px auto;
+    margin: 0 auto;
 }
 
 .double-bounce1,
@@ -175,6 +175,48 @@ body {
 .double-bounce2 {
     -webkit-animation-delay: -1.0s;
     animation-delay: -1.0s;
+}
+
+.col {
+    display: block;
+    float: left;
+}
+
+.col:first-child {
+    margin-right: 2px;
+}
+
+.col.col-1-2 {
+    width: calc(50% - 2px);
+    height: 100px;
+    background-color: #000;
+}
+
+.language-select-row {
+    background: #03A9F4;
+}
+
+.icon {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    right: 80px;
+    top: 30px;
+}
+
+.icon.terran {
+    background-image: url("/img/terran.png");
+}
+
+.icon.zerg {
+    background-image: url("/img/zerg.png");
+}
+
+.icon.protoss {
+    background-image: url("/img/protoss.png")
 }
 
 @-webkit-keyframes sk-bounce {
