@@ -7,9 +7,14 @@
         "default_icon": "img/icon.png",
         "default_popup": "popup.html"
     },
+    "background": {
+        "scripts": ["js/eventPage.js"],
+        "persistent": false
+    },
     "permissions": [
         "https://api.twitch.tv/*",
         "notifications",
-        "storage"
+        "storage",
+        "alarms"
     ]
 }

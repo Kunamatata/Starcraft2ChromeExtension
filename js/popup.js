@@ -6,8 +6,10 @@ $(document).ready(function() {
     var notifiedWhenOnline;
 
     //localstroage array
-    var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
 
+    var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
+    if(notifiedList == null)
+        notifiedList = [];
     var checkStreamsAjax = function(link) {
         $.ajax({
             url: link,
@@ -110,19 +112,22 @@ $(document).ready(function() {
                     htmlContent += '</div>';
 
                 }
+
                 $("#stream-results").html(htmlContent);
-                for (favoriteStream of notifiedList) {
-                    var elem = $("[data-stream-name*='" + favoriteStream['stream-name'] + "']");
-                    elem.addClass("active-star");
-                }
+                if (notifiedList != null)
+                    for (favoriteStream of notifiedList) {
+                        var elem = $("[data-stream-name*='" + favoriteStream['stream-name'] + "']");
+                        elem.addClass("active-star");
+                    }
             },
             error: function(res) {
-                $("#container").append("failed");
+                console.log("Are you sure to be connected?")
             },
             complete: function(res) {
                 $(".spinner").hide();
                 $(".stream").css('opacity', '1');
             },
+            timeout: 5000
         });
     };
 
