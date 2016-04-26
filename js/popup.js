@@ -1,22 +1,24 @@
+"use strict";
 $(document).ready(function() {
+
     var liveStreams = [];
     var liveBroadcasterLanguageStreams = [];
 
-    var broadcasterLanguage = "fr"
+    var broadcasterLanguage = "fr";
     var notifiedWhenOnline;
 
-    //localstroage array
-
     var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
-    if(notifiedList == null)
+    if (notifiedList === null) {
         notifiedList = [];
-    var checkStreamsAjax = function(link) {
+    }
+
+    function checkStreamsAjax(link) {
         $.ajax({
             url: link,
             dataType: 'json',
             success: function(res) {
-                console.log(res)
-                for (stream of res.streams) {
+                console.log(res);
+                for (var stream of res.streams) {
                     console.log(notifiedList);
                     chrome.notifications.create(
                         'Notification-test', {
@@ -35,13 +37,13 @@ $(document).ready(function() {
         });
     };
 
-    var openStreamLink = function(notificationId) {
+    function openStreamLink(notificationId) {
         window.open(stream.channel.url, '_blank');
-    }
+    };
 
-    var isStreamOnline = function(notifiedList) {
+    function isStreamOnline(notifiedList) {
         var channels = "";
-        for (object of notifiedList) {
+        for (var object of notifiedList) {
             channels += object['stream-name'] + ",";
         }
         var link = "https://api.twitch.tv/kraken/streams?stream_type=live&channel=" + channels;
@@ -49,7 +51,7 @@ $(document).ready(function() {
         //Remove last comma
         link = link.slice(0, -1);
         checkStreamsAjax(link);
-    }
+    };
 
     $('#stream-results').on('click', '.fa.fa-star', function(event) {
         var data = $(this).data("stream-name");
@@ -77,19 +79,20 @@ $(document).ready(function() {
         }
     });
 
-    var loadPreferences = function() {
+    function loadPreferences() {
         notifiedWhenOnline = localStorage.getItem('notifiedWhenOnline');
         notifiedWhenOnline = JSON.parse(notifiedWhenOnline);
         $("#checkbox-get-notified").prop("checked", notifiedWhenOnline);
-    }
+    };
 
-    var getStreamList = function(language) {
+    // Receives json and parses it to content
+    function getStreamList(language) {
         $.ajax({
             url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
             dataType: 'json',
             success: function(res) {
                 liveStreams = res.streams;
-                for (stream of liveStreams) {
+                for (var stream of liveStreams) {
                     if (stream.channel.broadcaster_language === language || stream.channel.language === language)
                         liveBroadcasterLanguageStreams.push(stream);
                 }
@@ -97,31 +100,32 @@ $(document).ready(function() {
                 var htmlContent = '';
                 for (stream of liveBroadcasterLanguageStreams) {
                     console.log(stream);
-                    htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>'
-                        //Race icon if race found in stream status
-                    if (stream.channel.status.match("[tT][eE][rR][rR][aA][nN]")) {
-                        htmlContent += '<div class="icon terran"></div>';
-                    }
-                    if (stream.channel.status.match("[zZ][eE][rR][gG]") != null) {
-                        htmlContent += '<div class="icon zerg"></div>';
-                    }
-                    if (stream.channel.status.match("[pP][rR][oO][tT][oO][sS][sS]")) {
-                        htmlContent += '<div class="icon protoss"></div>';
-                    }
 
+                    htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status.substring(0, 90) + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>';
+                    //Race icon if race found in stream status
+                    if (stream.channel.status != null) {
+                        if (stream.channel.status.match("[tT][eE][rR][rR][aA][nN]")) {
+                            htmlContent += '<div class="icon terran"></div>';
+                        }
+                        if (stream.channel.status.match("[zZ][eE][rR][gG]")) {
+                            htmlContent += '<div class="icon zerg"></div>';
+                        }
+                        if (stream.channel.status.match("[pP][rR][oO][tT][oO][sS][sS]")) {
+                            htmlContent += '<div class="icon protoss"></div>';
+                        }
+                    }
                     htmlContent += '</div>';
-
                 }
 
                 $("#stream-results").html(htmlContent);
                 if (notifiedList != null)
-                    for (favoriteStream of notifiedList) {
+                    for (var favoriteStream of notifiedList) {
                         var elem = $("[data-stream-name*='" + favoriteStream['stream-name'] + "']");
                         elem.addClass("active-star");
                     }
             },
             error: function(res) {
-                console.log("Are you sure to be connected?")
+                console.log("Are you sure to be connected?");
             },
             complete: function(res) {
                 $(".spinner").hide();
@@ -164,3 +168,16 @@ $(document).ready(function() {
 
     loadPreferences();
 });
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-76976309-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
