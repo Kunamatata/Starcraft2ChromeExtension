@@ -169,6 +169,8 @@ $(document).ready(function() {
     loadPreferences();
 });
 
+
+// Google Analytics Tracking Code
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-76976309-1']);
 _gaq.push(['_trackPageview']);
