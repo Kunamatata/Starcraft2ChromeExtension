@@ -2,7 +2,7 @@
     "name": "Starcraft 2 Streams",
     "version": "0.0.2",
     "manifest_version": 2,
-    "description": "Get the list of streamers and displayed by race",
+    "description": "Get the list of streamers select your broadcasting language and see the list displayed by race and viewer count",
     "browser_action": {
         "default_icon": "img/icon.png",
         "default_popup": "popup.html"
