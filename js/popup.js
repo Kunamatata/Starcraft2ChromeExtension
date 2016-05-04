@@ -47,7 +47,6 @@ $(document).ready(function () {
         }
         var link = "https://api.twitch.tv/kraken/streams?stream_type=live&channel=" + channels;
 
-        //Remove last comma
         link = link.slice(0, -1);
         checkStreamsAjax(link);
     };
