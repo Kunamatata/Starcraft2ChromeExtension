@@ -4,12 +4,5 @@ chrome.runtime.onStartup.addListener(function() {
 });
 chrome.alarms.create("coucou", { delayInMinutes: 0, periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener(function(alarm) {
-    console.log("Event every 1 minute")
+    console.log("")
 });
-
-/*
-Instead of alarms we can use intervals
-setInterval(function(){
-    console.log("interval");
-},500)*/
-

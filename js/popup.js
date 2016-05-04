@@ -1,5 +1,5 @@
 "use strict";
-$(document).ready(function() {
+$(document).ready(function () {
 
     var liveStreams = [];
     var liveBroadcasterLanguageStreams = [];
@@ -16,7 +16,7 @@ $(document).ready(function() {
         $.ajax({
             url: link,
             dataType: 'json',
-            success: function(res) {
+            success: function (res) {
                 console.log(res);
                 for (var stream of res.streams) {
                     console.log(notifiedList);
@@ -25,15 +25,14 @@ $(document).ready(function() {
                             type: 'basic',
                             iconUrl: 'img/icon.png',
                             title: stream.channel.display_name + "is online",
-                            message: "Click Me if you want to see the stream!"
+                            message: "Click me to see the stream!"
                         },
-                        function() {}
-
+                        function () { }
                     );
                 }
             },
-            error: function(res) {},
-            complete: function(res) {},
+            error: function (res) { },
+            complete: function (res) { },
         });
     };
 
@@ -53,12 +52,12 @@ $(document).ready(function() {
         checkStreamsAjax(link);
     };
 
-    $('#stream-results').on('click', '.fa.fa-star', function(event) {
+    $('#stream-results').on('click', '.fa.fa-star', function (event) {
         var data = $(this).data("stream-name");
         var obj = {};
         if ($(this).hasClass('active-star')) {
             $(this).removeClass('active-star');
-            notifiedList = notifiedList.filter(function(obj) {
+            notifiedList = notifiedList.filter(function (obj) {
                 return obj['stream-name'] != data;
             });
         } else {
@@ -71,7 +70,7 @@ $(document).ready(function() {
         localStorage.setItem("favStreams", JSON.stringify(notifiedList));
     });
 
-    $("#checkbox-get-notified").change(function(event) {
+    $("#checkbox-get-notified").change(function (event) {
         if ($(this).prop("checked") === true) {
             localStorage.setItem("notifiedWhenOnline", true);
         } else {
@@ -90,7 +89,7 @@ $(document).ready(function() {
         $.ajax({
             url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
             dataType: 'json',
-            success: function(res) {
+            success: function (res) {
                 liveStreams = res.streams;
                 for (var stream of liveStreams) {
                     if (stream.channel.broadcaster_language === language || stream.channel.language === language)
@@ -99,8 +98,8 @@ $(document).ready(function() {
                 console.log(liveBroadcasterLanguageStreams);
                 var htmlContent = '';
                 for (stream of liveBroadcasterLanguageStreams) {
-                    console.log(stream);
-
+                    if (!stream.channel.status)
+                        stream.channel.status = ""
                     htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status.substring(0, 90) + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>';
                     //Race icon if race found in stream status
                     if (stream.channel.status != null) {
@@ -124,10 +123,10 @@ $(document).ready(function() {
                         elem.addClass("active-star");
                     }
             },
-            error: function(res) {
+            error: function (res) {
                 console.log("Are you sure to be connected?");
             },
-            complete: function(res) {
+            complete: function (res) {
                 $(".spinner").hide();
                 $(".stream").css('opacity', '1');
             },
@@ -137,7 +136,7 @@ $(document).ready(function() {
 
 
 
-    $("#option-icon").click(function(event) {
+    $("#option-icon").click(function (event) {
         $("#option-popup").css({
             visibility: 'visible',
             opacity: '1',
@@ -145,7 +144,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#close-popup").click(function(event) {
+    $("#close-popup").click(function (event) {
         $("#option-popup").css({
             visibility: 'hidden',
             opacity: '0',
@@ -154,7 +153,7 @@ $(document).ready(function() {
     });
 
 
-    $('#select-broadcaster-language').change(function() {
+    $('#select-broadcaster-language').change(function () {
         liveBroadcasterLanguageStreams = [];
         $("#stream-results").html("");
         broadcasterLanguage = $(this).val();
@@ -175,7 +174,7 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-76976309-1']);
 _gaq.push(['_trackPageview']);
 
-(function() {
+(function () {
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;
