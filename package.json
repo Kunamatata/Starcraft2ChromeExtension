@@ -1,0 +1,27 @@
+{
+  "name": "starcraft2chromextension",
+  "version": "0.0.2",
+  "description": "Get your twitch starcraft 2 streams quickly and click the star to favorite your stream and get notified when they get online",
+  "main": "popup.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Kunamatata@github.com/Kunamatata/Starcraft2ChromeExtension.git"
+  },
+  "keywords": [
+    "Starcraft",
+    "2",
+    "chrome",
+    "extension",
+    "twitch",
+    "starcraft"
+  ],
+  "author": "Maxime Caly aka Kunamatata",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kunamatata/Starcraft2ChromeExtension/issues"
+  },
+  "homepage": "https://github.com/Kunamatata/Starcraft2ChromeExtension#readme"
+}
