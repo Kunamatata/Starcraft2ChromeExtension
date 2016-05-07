@@ -51,6 +51,7 @@ $(document).ready(function () {
         checkStreamsAjax(link);
     };
 
+    // Favorite a stream
     $('#stream-results').on('click', '.fa.fa-star', function (event) {
         var data = $(this).data("stream-name");
         var obj = {};
@@ -83,6 +84,25 @@ $(document).ready(function () {
         $("#checkbox-get-notified").prop("checked", notifiedWhenOnline);
     };
 
+    function createStreamElement(stream) {
+        if (stream.channel) {
+            htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status.substring(0, 90) + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>';
+            //Race icon if race found in stream status
+            if (stream.channel.status != null) {
+                if (stream.channel.status.match("[tT][eE][rR][rR][aA][nN]")) {
+                    htmlContent += '<div class="icon terran"></div>';
+                }
+                if (stream.channel.status.match("[zZ][eE][rR][gG]")) {
+                    htmlContent += '<div class="icon zerg"></div>';
+                }
+                if (stream.channel.status.match("[pP][rR][oO][tT][oO][sS][sS]")) {
+                    htmlContent += '<div class="icon protoss"></div>';
+                }
+            }
+            htmlContent += '</div>';
+        }
+    }
+
     // Receives json and parses it to content
     function getStreamList(language) {
         $.ajax({
@@ -97,22 +117,7 @@ $(document).ready(function () {
                 console.log(liveBroadcasterLanguageStreams);
                 var htmlContent = '';
                 for (stream of liveBroadcasterLanguageStreams) {
-                    if (!stream.channel.status)
-                        stream.channel.status = ""
-                    htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status.substring(0, 90) + '</span><span>Viewers: ' + stream.viewers + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>';
-                    //Race icon if race found in stream status
-                    if (stream.channel.status != null) {
-                        if (stream.channel.status.match("[tT][eE][rR][rR][aA][nN]")) {
-                            htmlContent += '<div class="icon terran"></div>';
-                        }
-                        if (stream.channel.status.match("[zZ][eE][rR][gG]")) {
-                            htmlContent += '<div class="icon zerg"></div>';
-                        }
-                        if (stream.channel.status.match("[pP][rR][oO][tT][oO][sS][sS]")) {
-                            htmlContent += '<div class="icon protoss"></div>';
-                        }
-                    }
-                    htmlContent += '</div>';
+                    createStreamElement(stream)
                 }
 
                 $("#stream-results").html(htmlContent);
