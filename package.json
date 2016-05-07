@@ -23,5 +23,7 @@
   "bugs": {
     "url": "https://github.com/Kunamatata/Starcraft2ChromeExtension/issues"
   },
-  "homepage": "https://github.com/Kunamatata/Starcraft2ChromeExtension#readme"
+  "homepage": "https://github.com/Kunamatata/Starcraft2ChromeExtension#readme",
+  "dependencies": {},
+  "devDependencies": {}
 }
