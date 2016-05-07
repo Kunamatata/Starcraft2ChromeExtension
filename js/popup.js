@@ -22,9 +22,9 @@ function checkStreamsAjax(link) {
             for (var stream of res.streams) {
                 console.log(notifiedList);
                 chrome.notifications.create(
-                    'Notification-test', {
+                    stream.channel.url, {
                         type: 'basic',
-                        iconUrl: 'img/icon.png',
+                        iconUrl: stream.channel.logo,
                         title: stream.channel.display_name + "is online",
                         message: "Click me to see the stream!"
                     },
@@ -37,8 +37,8 @@ function checkStreamsAjax(link) {
     });
 };
 
-function openStreamLink(notificationId) {
-    window.open(stream.channel.url, '_blank');
+function openStreamLink(streamLink) {
+    window.open(streamLink, '_blank');
 };
 
 function isStreamOnline(notifiedList) {
@@ -172,10 +172,7 @@ chrome.notifications.onClicked.addListener(openStreamLink);
 
 localStorage.setItem("broadcasterLanguage", broadcasterLanguage);
 
-
 loadPreferences();
-
-
 
 // Google Analytics Tracking Code
 var _gaq = _gaq || [];

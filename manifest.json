@@ -8,14 +8,18 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "scripts": ["js/eventPage.js"],
+        "scripts": [
+            "js/eventPage.js"
+        ],
         "persistent": false
     },
     "permissions": [
         "https://api.twitch.tv/*",
         "notifications",
         "storage",
-        "alarms"
+        "alarms",
+        "http://*/*",
+        "https://*/*"
     ],
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
