@@ -132,7 +132,7 @@ function getStreamList(language) {
                 }
         },
         error: function (res) {
-            console.log("Are you sure to be connected?");
+            console.log("Are you sure you are connected?");
         },
         complete: function (res) {
             $(".spinner").hide();
