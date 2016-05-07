@@ -4,7 +4,7 @@
   "description": "Get your twitch starcraft 2 streams quickly and click the star to favorite your stream and get notified when they get online",
   "main": "popup.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test yet specified\" && exit 0"
   },
   "repository": {
     "type": "git",
