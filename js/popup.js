@@ -1,6 +1,5 @@
 "use strict";
 
-
 var liveStreams = [];
 var liveBroadcasterLanguageStreams = [];
 
@@ -173,6 +172,13 @@ chrome.notifications.onClicked.addListener(openStreamLink);
 localStorage.setItem("broadcasterLanguage", broadcasterLanguage);
 
 loadPreferences();
+
+document.addEventListener('DOMContentLoaded', function () {
+   var bg = chrome.extension.getBackgroundPage();
+    var myURL = bg.test;
+  alert(myURL)
+
+});
 
 // Google Analytics Tracking Code
 var _gaq = _gaq || [];
