@@ -10,6 +10,8 @@ var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
 if (notifiedList === null) {
     notifiedList = [];
 }
+var options={};
+var PREFERED_LANGUAGE="broadcasterLanguage"
 
 
 function checkStreamsAjax(link) {
@@ -71,17 +73,23 @@ $('#stream-results').on('click', '.fa.fa-star', function (event) {
 });
 
 $("#checkbox-get-notified").change(function (event) {
-    if ($(this).prop("checked") === true) {
-        localStorage.setItem("notifiedWhenOnline", true);
-    } else {
-        localStorage.setItem("notifiedWhenOnline", false);
-    }
+    localStorage.setItem("notifiedWhenOnline", $(this).prop("checked") === true);
+
 });
+
+function loadLanguagePreferences(){
+	if(localStorage.getItem(PREFERED_LANGUAGE)){
+		options.lang = localStorage.getItem(PREFERED_LANGUAGE);
+		$('#select-broadcaster-language').val(options.lang);
+	}
+}
 
 function loadPreferences() {
     notifiedWhenOnline = localStorage.getItem('notifiedWhenOnline');
     notifiedWhenOnline = JSON.parse(notifiedWhenOnline);
     $("#checkbox-get-notified").prop("checked", notifiedWhenOnline);
+	loadLanguagePreferences(options);
+	
 };
 
 // Create the DOM element for a stream
@@ -106,7 +114,8 @@ function createStreamElement(stream, htmlContent) {
 }
 
 // Receives json and parses it to content
-function getStreamList(language) {
+function getStreamList(options) {
+	var language = options.lang;
     $.ajax({
         url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
         dataType: 'json',
@@ -161,18 +170,18 @@ $("#close-popup").click(function (event) {
 
 
 $('#select-broadcaster-language').change(function () {
+debugger;
     liveBroadcasterLanguageStreams = [];
     $("#stream-results").html("");
     broadcasterLanguage = $(this).val();
+	localStorage.setItem("broadcasterLanguage", broadcasterLanguage);
     getStreamList(broadcasterLanguage);
 });
 
 chrome.notifications.onClicked.addListener(openStreamLink);
 
-localStorage.setItem("broadcasterLanguage", broadcasterLanguage);
-
 loadPreferences();
-
+getStreamList(options);
 document.addEventListener('DOMContentLoaded', function () {
 
 
