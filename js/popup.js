@@ -174,9 +174,7 @@ localStorage.setItem("broadcasterLanguage", broadcasterLanguage);
 loadPreferences();
 
 document.addEventListener('DOMContentLoaded', function () {
-   var bg = chrome.extension.getBackgroundPage();
-    var myURL = bg.test;
-  alert(myURL)
+
 
 });
 
