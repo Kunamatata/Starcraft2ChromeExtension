@@ -9,6 +9,8 @@
     },
     "background": {
         "scripts": [
+            "js/lodash.min.js",
+            "js/jquery.min.js",
             "js/eventPage.js"
         ],
         "persistent": false
