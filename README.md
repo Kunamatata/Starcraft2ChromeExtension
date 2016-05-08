@@ -17,7 +17,9 @@ Tons of new features to come!
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-## History
+## TODO
 1. Add a notification system with background event page.
 2. Structure code and make it cleaner
 3. Implement options such as getting notified or not / Themes etc...
+4. Find a name for the extension
+5. Find / Create an icon for the extension
