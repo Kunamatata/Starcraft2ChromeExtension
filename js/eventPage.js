@@ -25,19 +25,20 @@ function setExtensionBadge(streams) {
     })
 
     var viewerCount = stream.viewers
-    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 255, 0, 255] })
+    debugger;
+    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 255, 0, 255] });
 
     if (viewerCount < 5000) {
-        chrome.browserAction.setBadgeBackgroundColor({ color: grey })
+        chrome.browserAction.setBadgeBackgroundColor({ color: grey });
     }
     else if (viewerCount <= 15000) {
-        chrome.browserAction.setBadgeBackgroundColor({ color: green })
+        chrome.browserAction.setBadgeBackgroundColor({ color: green });
     }
     else {
-        chrome.browserAction.setBadgeBackgroundColor({ color: red })
+        chrome.browserAction.setBadgeBackgroundColor({ color: red });
     }
 
-    chrome.browserAction.setBadgeText({ text: kNumberFormatter(viewerCount) })
+    chrome.browserAction.setBadgeText({ text: kNumberFormatter(viewerCount) });
 
 }
 
