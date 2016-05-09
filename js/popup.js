@@ -3,15 +3,15 @@
 var liveStreams = [];
 var liveBroadcasterLanguageStreams = [];
 
-var broadcasterLanguage = "fr";
+var broadcasterLanguage = "en";
 var notifiedWhenOnline;
 
 var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
 if (notifiedList === null) {
     notifiedList = [];
 }
-var options={};
-var PREFERED_LANGUAGE="broadcasterLanguage"
+var options = {};
+var PREFERED_LANGUAGE = "broadcasterLanguage"
 
 
 function checkStreamsAjax(link) {
@@ -77,19 +77,18 @@ $("#checkbox-get-notified").change(function (event) {
 
 });
 
-function loadLanguagePreferences(){
-	if(localStorage.getItem(PREFERED_LANGUAGE)){
-		options.lang = localStorage.getItem(PREFERED_LANGUAGE);
-		$('#select-broadcaster-language').val(options.lang);
-	}
+function loadLanguagePreferences() {
+    if (localStorage.getItem(PREFERED_LANGUAGE)) {
+        options.lang = localStorage.getItem(PREFERED_LANGUAGE);
+        $('#select-broadcaster-language').val(options.lang);
+    }
 }
 
 function loadPreferences() {
     notifiedWhenOnline = localStorage.getItem('notifiedWhenOnline');
     notifiedWhenOnline = JSON.parse(notifiedWhenOnline);
     $("#checkbox-get-notified").prop("checked", notifiedWhenOnline);
-	loadLanguagePreferences(options);
-	
+    loadLanguagePreferences(options);
 };
 
 // Create the DOM element for a stream
@@ -115,22 +114,21 @@ function createStreamElement(stream, htmlContent) {
 
 // Receives json and parses it to content
 function getStreamList(options) {
-	var language = options.lang;
+    var language = options.lang;
     $.ajax({
         url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
         dataType: 'json',
         success: function (res) {
             liveStreams = res.streams;
             for (var stream of liveStreams) {
-                if (stream.channel.broadcaster_language === language || stream.channel.language === language)
+                if (stream.channel.broadcaster_language === language || stream.channel.language === language) {
                     liveBroadcasterLanguageStreams.push(stream);
+                }
             }
-            console.log(liveBroadcasterLanguageStreams);
             var htmlContent = '';
             for (stream of liveBroadcasterLanguageStreams) {
                 htmlContent = createStreamElement(stream, htmlContent)
             }
-
 
             $("#stream-results").html(htmlContent);
             if (notifiedList != null)
@@ -170,21 +168,22 @@ $("#close-popup").click(function (event) {
 
 
 $('#select-broadcaster-language').change(function () {
-debugger;
     liveBroadcasterLanguageStreams = [];
     $("#stream-results").html("");
     broadcasterLanguage = $(this).val();
-	localStorage.setItem("broadcasterLanguage", broadcasterLanguage);
-    getStreamList(broadcasterLanguage);
+    localStorage.setItem(PREFERED_LANGUAGE, broadcasterLanguage);
+
+    options.lang = broadcasterLanguage
+    getStreamList(options);
 });
 
 chrome.notifications.onClicked.addListener(openStreamLink);
 
 loadPreferences();
 getStreamList(options);
+
+//This is to communicate between popup.js and background.js (eventPage.js)
 document.addEventListener('DOMContentLoaded', function () {
-
-
 });
 
 // Google Analytics Tracking Code
