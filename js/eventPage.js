@@ -25,7 +25,7 @@ function setExtensionBadge(streams) {
     })
 
     var viewerCount = stream.viewers
-    debugger;
+    
     chrome.browserAction.setBadgeBackgroundColor({ color: [0, 255, 0, 255] });
 
     if (viewerCount < 5000) {
