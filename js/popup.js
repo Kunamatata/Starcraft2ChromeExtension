@@ -97,14 +97,17 @@ function createStreamElement(stream, htmlContent) {
         htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status.substring(0, 90) + '</span><span>Viewers: ' + stream.viewers.toLocaleString() + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>';
         //Race icon if race found in stream status
         if (stream.channel.status != null) {
-            if (stream.channel.status.match("[tT][eE][rR][rR][aA][nN]")) {
+            if (stream.channel.status.match(/terran/i)) {
                 htmlContent += '<div class="icon terran"></div>';
             }
-            if (stream.channel.status.match("[zZ][eE][rR][gG]")) {
+            if (stream.channel.status.match(/zerg/i)) {
                 htmlContent += '<div class="icon zerg"></div>';
             }
-            if (stream.channel.status.match("[pP][rR][oO][tT][oO][sS][sS]")) {
+            if (stream.channel.status.match(/protoss/i)) {
                 htmlContent += '<div class="icon protoss"></div>';
+            }
+            if (stream.channel.status.match(/random/i)) {
+                htmlContent += '<div class="icon random"></div>';
             }
         }
         htmlContent += '</div>';
