@@ -124,7 +124,7 @@ function getStreamList(options) {
         success: function (res) {
             liveStreams = res.streams;
             for (var stream of liveStreams) {
-                if (stream.channel.broadcaster_language === language || stream.channel.language === language) {
+                if (language == "all" || stream.channel.broadcaster_language === language || stream.channel.language === language) {
                     liveBroadcasterLanguageStreams.push(stream);
                 }
             }
