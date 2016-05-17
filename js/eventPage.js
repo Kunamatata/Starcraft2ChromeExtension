@@ -62,9 +62,9 @@ function getAllStreams() {
     });
 };
 
-function checkFavoriteStreams(streamDifference, favoriteList){
-    var notifyList = streamDifference.filter(function(value){
-        return favoriteList.filter(function(val){
+function checkFavoriteStreams(streamDifference, favoriteList) {
+    var notifyList = streamDifference.filter(function (value) {
+        return favoriteList.filter(function (val) {
             return value.channel._id === val.channel._id
         })
     })
@@ -73,18 +73,19 @@ function checkFavoriteStreams(streamDifference, favoriteList){
 }
 
 function compareStreams(currentList, oldList) {
-    // console.log(currentList);
-    // console.log(oldList)
-    var streamDifference = currentList.filter(function (value) {
-        return oldList.filter(function (val) {
-            return value.channel._id === val.channel._id
-        }).length == 0
-    })
+    var streamDifference = [];
+    if (currentList && oldList) {
+        streamDifference = currentList.filter(function (value) {
+            return oldList.filter(function (val) {
+                return value.channel._id === val.channel._id
+            }).length == 0
+        })
+    }
     console.log(streamDifference.length)
     // If there is a difference in the list check favorite streamerList
-    
+
     var favoriteList = JSON.parse(localStorage.getItem("favStreams"));
-    
+
     if (streamDifference.length > 0 && favoriteList) {
         checkFavoriteStreams(streamDifference, JSON.parse(localStorage.getItem("favStreams")));
     }
@@ -94,6 +95,7 @@ chrome.runtime.onStartup.addListener(function () {
     console.log('Extension started up...');
 
 });
+
 chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 1 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
