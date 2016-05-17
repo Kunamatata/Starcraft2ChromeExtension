@@ -1,6 +1,6 @@
 var liveStreams = [];
 // For chrome badge
-var grey = [0, 0, 0, 255]
+var grey = [66, 66, 66, 255]
 var green = [0, 255, 0, 255]
 var red = [255, 0, 0, 255]
 
