@@ -13,7 +13,6 @@ if (notifiedList === null) {
 var options = {};
 var PREFERED_LANGUAGE = "broadcasterLanguage"
 
-
 function checkStreamsAjax(link) {
     $.ajax({
         url: link,

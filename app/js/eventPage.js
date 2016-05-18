@@ -47,7 +47,7 @@ function getAllStreams() {
         url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
         dataType: 'json',
         success: function (res) {
-            currentLiveStreams = res.streams;
+            var currentLiveStreams = res.streams;
             setExtensionBadge(currentLiveStreams);
             var previousLiveStreams = localStorage.getItem("previousLiveStreams");
 
