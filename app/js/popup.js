@@ -17,7 +17,7 @@ function checkStreamsAjax(link) {
     $.ajax({
         url: link,
         dataType: 'json',
-        success: function (res) {
+        success: function(res) {
             console.log(res);
             for (var stream of res.streams) {
                 console.log(notifiedList);
@@ -28,12 +28,12 @@ function checkStreamsAjax(link) {
                         title: stream.channel.display_name + "is online",
                         message: "Click me to see the stream!"
                     },
-                    function () { }
+                    function() {}
                 );
             }
         },
-        error: function (res) { },
-        complete: function (res) { },
+        error: function(res) {},
+        complete: function(res) {},
     });
 };
 
@@ -53,12 +53,12 @@ function isStreamOnline(notifiedList) {
 };
 
 // Favorite a stream
-$('#stream-results').on('click', '.fa.fa-star', function (event) {
+$('#stream-results').on('click', '.fa.fa-star', function(event) {
     var data = $(this).data("stream-name");
     var obj = {};
     if ($(this).hasClass('active-star')) {
         $(this).removeClass('active-star');
-        notifiedList = notifiedList.filter(function (obj) {
+        notifiedList = notifiedList.filter(function(obj) {
             return obj['stream-name'] != data;
         });
     } else {
@@ -71,7 +71,7 @@ $('#stream-results').on('click', '.fa.fa-star', function (event) {
     localStorage.setItem("favStreams", JSON.stringify(notifiedList));
 });
 
-$("#checkbox-get-notified").change(function (event) {
+$("#checkbox-get-notified").change(function(event) {
     localStorage.setItem("notifiedWhenOnline", $(this).prop("checked") === true);
 
 });
@@ -120,7 +120,7 @@ function getStreamList(options) {
     $.ajax({
         url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
         dataType: 'json',
-        success: function (res) {
+        success: function(res) {
             liveStreams = res.streams;
             for (var stream of liveStreams) {
                 if (language == "all" || stream.channel.broadcaster_language === language || stream.channel.language === language) {
@@ -139,10 +139,10 @@ function getStreamList(options) {
                     elem.addClass("active-star");
                 }
         },
-        error: function (res) {
+        error: function(res) {
             console.log("Are you sure you are connected?");
         },
-        complete: function (res) {
+        complete: function(res) {
             $(".spinner").hide();
             $(".stream").css('opacity', '1');
         },
@@ -152,7 +152,7 @@ function getStreamList(options) {
 
 
 
-$("#option-icon").click(function (event) {
+$("#option-icon").click(function(event) {
     $("#option-popup").css({
         visibility: 'visible',
         opacity: '1',
@@ -160,7 +160,7 @@ $("#option-icon").click(function (event) {
     });
 });
 
-$("#close-popup").click(function (event) {
+$("#close-popup").click(function(event) {
     $("#option-popup").css({
         visibility: 'hidden',
         opacity: '0',
@@ -169,7 +169,7 @@ $("#close-popup").click(function (event) {
 });
 
 
-$('#select-broadcaster-language').change(function () {
+$('#select-broadcaster-language').change(function() {
     liveBroadcasterLanguageStreams = [];
     $("#stream-results").html("");
     broadcasterLanguage = $(this).val();
@@ -185,15 +185,14 @@ loadPreferences();
 getStreamList(options);
 
 //This is to communicate between popup.js and background.js (eventPage.js)
-document.addEventListener('DOMContentLoaded', function () {
-});
+document.addEventListener('DOMContentLoaded', function() {});
 
 // Google Analytics Tracking Code
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-76976309-1']);
 _gaq.push(['_trackPageview']);
 
-(function () {
+(function() {
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;

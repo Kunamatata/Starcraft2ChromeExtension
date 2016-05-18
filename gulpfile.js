@@ -1,11 +1,17 @@
+'use strict';
+
 var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
 var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
+var cleanCSS = require('gulp-clean-css');
+
 
 gulp.task('js', function () {
-    return gulp.src('app/js/**/*.js')
-        .pipe(babel({ presets: ['es2015'] }))
+    return gulp.src('app/js/**/*.js', '!app/js/**/*.min.js')
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(uglify())
         .pipe(gulp.dest('dist/js'))
 });
@@ -13,6 +19,7 @@ gulp.task('js', function () {
 gulp.task('css', function () {
     return gulp.src('app/css/**/*.css')
         .pipe(autoprefixer())
+        .pipe(cleanCSS())
         .pipe(gulp.dest('dist/css'))
 });
 
@@ -31,7 +38,6 @@ gulp.task('manifest', function () {
         .pipe(gulp.dest('dist'))
 });
 
-
 gulp.task('watch', function () {
     gulp.watch('app/css/**/*.css', ['css']);
     gulp.watch('app/js/**/*.js', ['js']);
@@ -40,4 +46,4 @@ gulp.task('watch', function () {
     gulp.watch('app/img/**/*', ['img']);
 });
 
-gulp.task('default', ['watch','img', 'js', 'css', 'popup', 'manifest']);
+gulp.task('default', ['watch', 'img', 'js', 'css', 'popup', 'manifest']);
