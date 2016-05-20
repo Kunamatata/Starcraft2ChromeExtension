@@ -7,8 +7,8 @@ var uglify = require('gulp-uglify');
 var cleanCSS = require('gulp-clean-css');
 
 
-gulp.task('js', function() {
-    return gulp.src(['app/js/**/*.js', '!app/js/**/*.min.js'])
+gulp.task('js', function () {
+    return gulp.src('app/js/*.js')
         .pipe(babel({
             presets: ['es2015']
         }))
@@ -16,29 +16,34 @@ gulp.task('js', function() {
         .pipe(gulp.dest('dist/js'))
 });
 
-gulp.task('css', function() {
+gulp.task('vendor', function () {
+    return gulp.src('app/js/vendor/*.js')
+        .pipe(gulp.dest('dist/js/vendor'))
+})
+
+gulp.task('css', function () {
     return gulp.src('app/css/**/*.css')
         .pipe(autoprefixer())
         .pipe(cleanCSS())
         .pipe(gulp.dest('dist/css'))
 });
 
-gulp.task('popup', function() {
+gulp.task('popup', function () {
     return gulp.src('app/popup.html')
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('img', function() {
+gulp.task('img', function () {
     return gulp.src('app/img/**/*')
         .pipe(gulp.dest('dist/img/'))
 });
 
-gulp.task('manifest', function() {
+gulp.task('manifest', function () {
     return gulp.src('app/manifest.json')
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     gulp.watch('app/css/**/*.css', ['css']);
     gulp.watch('app/js/**/*.js', ['js']);
     gulp.watch('app/popup.html', ['popup']);
@@ -46,4 +51,4 @@ gulp.task('watch', function() {
     gulp.watch('app/img/**/*', ['img']);
 });
 
-gulp.task('default', ['watch', 'img', 'js', 'css', 'popup', 'manifest']);
+gulp.task('default', ['img', 'js', 'vendor', 'css', 'popup', 'manifest', 'watch']);
