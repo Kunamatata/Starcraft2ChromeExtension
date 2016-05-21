@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/Kunamatata/Starcraft2ChromeExtension#readme",
   "dependencies": {
-    "lodash": "^4.11.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
