@@ -93,11 +93,11 @@
     // Create the DOM element for a stream
     function createStreamElement(stream, htmlContent) {
         if (stream.channel) {
-            htmlContent += '<div class="stream">'
+            htmlContent += '<div class="stream"><span class="first-row">'
                 + '<i class="fa fa-star fa-lg" data-stream-name=' 
                 + stream.channel.display_name + '></i><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' 
-                + stream.channel.display_name + '</a> - ' + stream.viewers.toLocaleString() + ' viewers'
-                + '<span>' + stream.channel.status.substring(0, 90) + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')">'
+                + stream.channel.display_name + '</a> - ' + stream.viewers.toLocaleString()
+                + '<svg class="svg-glyph_live" height="16px" version="1.1" viewBox="0 0 16 16" width="16px" x="0px" y="0px"> <path clip-rule="evenodd" d="M11,14H5H2v-1l3-3h2L5,8V2h6v6l-2,2h2l3,3v1H11z" fill-rule="evenodd"></path> </svg></span><span>' + stream.channel.status.substring(0, 90) + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')">'
                 + '</div>';
             //Race icon if race found in stream status
             if (stream.channel.status != null) {

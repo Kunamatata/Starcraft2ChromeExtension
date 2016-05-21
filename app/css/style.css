@@ -61,6 +61,15 @@ body {
     font-weight: bold;
 }
 
+span.first-row{
+    display: flex;
+    align-items: center;
+}
+
+svg path{
+    fill: #00b6ff;
+}
+
 .loading {
     margin: auto;
     position: absolute;
