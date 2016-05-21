@@ -52,3 +52,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['img', 'js', 'vendor', 'css', 'popup', 'manifest', 'watch']);
+
+gulp.task('build', ['img', 'js', 'vendor', 'css', 'popup', 'manifest']);
