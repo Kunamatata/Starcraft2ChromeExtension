@@ -11,8 +11,8 @@ Get your Starcraft 2 streams quickly with this extensions. Get notified when you
 Tons of new features to come!
 
 ##Setup
-npm install
-gulp to create the dist folder
+1. **npm install**
+2. **gulp** to create the dist folder
 
 Dist is never pushed to github since it's something you can build
 
