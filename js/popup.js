@@ -94,7 +94,10 @@ function loadPreferences() {
 // Create the DOM element for a stream
 function createStreamElement(stream, htmlContent) {
     if (stream.channel) {
-        htmlContent += '<div class="stream"><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a><span>' + stream.channel.status.substring(0, 90) + '</span><span>Viewers: ' + stream.viewers.toLocaleString() + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')"></div><i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i>';
+        htmlContent += '<div class="stream">'
+            + '<i class="fa fa-star fa-lg" data-stream-name=' + stream.channel.display_name + '></i><a class="stream-title" target="_blank" href="' + stream.channel.url + '">' + stream.channel.display_name + '</a> - ' + stream.viewers.toLocaleString() + ' viewers'
+            + '<span>' + stream.channel.status.substring(0, 90) + '</span> <div class="stream-logo" style="background-image:url(' + stream.channel.logo + ')">'
+            + '</div>';
         //Race icon if race found in stream status
         if (stream.channel.status != null) {
             if (stream.channel.status.match(/terran/i)) {
