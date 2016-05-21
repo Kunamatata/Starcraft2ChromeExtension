@@ -10,6 +10,12 @@ Get your Starcraft 2 streams quickly with this extensions. Get notified when you
 
 Tons of new features to come!
 
+##Setup
+npm install
+gulp to create the dist folder
+
+Dist is never pushed to github since it's something you can build
+
 ## Contributing
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
