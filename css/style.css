@@ -18,7 +18,7 @@ body {
 
 .stream {
     position: relative;
-    height: 95px;
+    height: 79px;
     background-color: #2B2F38;
     color: #fff;
     opacity: 0;
@@ -132,7 +132,11 @@ body {
     background-position: center;
     background-size: cover;
     right: 10px;
-    top: 20px;
+    top: 12px;
+}
+
+.fa.fa-star {
+    margin-right: 5px;
 }
 
 .fa.fa-star:hover {
