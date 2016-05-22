@@ -107,7 +107,7 @@
                 if (stream.channel.status.match(/zerg/i)) {
                     htmlContent += '<div class="icon zerg"></div>';
                 }
-                if (stream.channel.status.match(/protoss/i) || stream.channel.status.match(/toss/i)) {
+                if (stream.channel.status.match(/protoss/i) || stream.channel.status.match(/(^|\W)toss($|\W)/i)) {
                     htmlContent += '<div class="icon protoss"></div>';
                 }
                 if (stream.channel.status.match(/random/i)) {
