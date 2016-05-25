@@ -83,7 +83,7 @@ function isStreamOnline(notifiedList) {
             }
             else {
                 var pastNotificationTime = new Date(notifiedList[index]['notificationDate'])
-                console.log(now - pastNotificationTime.getTime());
+                //Every hour reset notifications to be sent out
                 if (now - pastNotificationTime.getTime() >= 3600000) {
                     notifiedList[index]['isNotified'] = false;
                     channels += object['stream-name'] + ','
@@ -125,7 +125,7 @@ chrome.runtime.onStartup.addListener(function () {
 
 chrome.notifications.onClicked.addListener(openStreamLink);
 
-chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 3 });
+chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 1 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     getAllStreams()
