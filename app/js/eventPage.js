@@ -43,6 +43,61 @@ function setExtensionBadge(streams) {
 
 }
 
+function openStreamLink(streamLink) {
+    window.open(streamLink, '_blank');
+};
+
+
+function checkFavoriteStreamChannels(link) {
+    fetch(link).then(function (response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+                response.status);
+            return;
+        }
+        response.json().then(function (res) {
+            for (var stream of res.streams) {
+                chrome.notifications.create(
+                    stream.channel.url, {
+                        type: 'basic',
+                        iconUrl: stream.channel.logo,
+                        title: stream.channel.display_name + "is online",
+                        message: "Click me to see the stream!"
+                    },
+                    function () { }
+                );
+            }
+        })
+    })
+}
+
+function isStreamOnline(notifiedList) {
+    var channels = "";
+    var now = Date.now();
+    if (notifiedList != null) {
+        notifiedList.forEach(function (object, index) {
+            if (!object['isNotified']) {
+                channels += object['stream-name'] + ',';
+                notifiedList[index]['isNotified'] = true;
+                notifiedList[index]['notificationDate'] = new Date();
+            }
+            else {
+                var pastNotificationTime = new Date(notifiedList[index]['notificationDate'])
+                console.log(now - pastNotificationTime.getTime());
+                if (now - pastNotificationTime.getTime() >= 3600000) {
+                    notifiedList[index]['isNotified'] = false;
+                    channels += object['stream-name'] + ','
+                }
+            }
+        })
+        localStorage.setItem('favStreams', JSON.stringify(notifiedList));
+        var link = "https://api.twitch.tv/kraken/streams?stream_type=live&channel=" + channels;
+
+        link = link.slice(0, -1);
+        checkFavoriteStreamChannels(link);
+    }
+};
+
 function getAllStreams() {
     fetch(starcraft2URL).then(function (response) {
         if (response.status !== 200) {
@@ -54,49 +109,23 @@ function getAllStreams() {
             var currentLiveStreams = res.streams;
             setExtensionBadge(currentLiveStreams);
             var previousLiveStreams = localStorage.getItem("previousLiveStreams");
-
-            compareStreams(currentLiveStreams, JSON.parse(previousLiveStreams));
+            var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
+            isStreamOnline(notifiedList)
+            // compareStreams(currentLiveStreams, JSON.parse(previousLiveStreams));
 
             localStorage.setItem("previousLiveStreams", JSON.stringify(currentLiveStreams));
         })
     })
 };
 
-function checkFavoriteStreams(streamDifference, favoriteList) {
-    var notifyList = streamDifference.filter(function (value) {
-        return favoriteList.filter(function (val) {
-            return value.channel._id === val.channel._id
-        })
-    })
-    console.log(favoriteList)
-    console.log(notifyList)
-}
-
-function compareStreams(currentList, oldList) {
-    var streamDifference = [];
-    if (currentList && oldList) {
-        streamDifference = currentList.filter(function (value) {
-            return oldList.filter(function (val) {
-                return value.channel._id === val.channel._id
-            }).length == 0
-        })
-    }
-    console.log(streamDifference.length)
-    // If there is a difference in the list check favorite streamerList
-
-    var favoriteList = JSON.parse(localStorage.getItem("favStreams"));
-
-    if (streamDifference.length > 0 && favoriteList) {
-        checkFavoriteStreams(streamDifference, JSON.parse(localStorage.getItem("favStreams")));
-    }
-}
-
 chrome.runtime.onStartup.addListener(function () {
     console.log('Extension started up...');
 
 });
 
-chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 1 });
+chrome.notifications.onClicked.addListener(openStreamLink);
+
+chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 3 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     getAllStreams()

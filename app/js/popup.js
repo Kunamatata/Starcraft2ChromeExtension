@@ -15,46 +15,9 @@ var PREFERED_LANGUAGE = "broadcasterLanguage"
 
 var streamResults = document.getElementById('stream-results');
 
-function checkStreamsAjax(link) {
-    fetch(link).then(function (response) {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-        response.json().then(function (res) {
-            console.log(res);
-            for (var stream of res.streams) {
-                console.log(notifiedList);
-                chrome.notifications.create(
-                    stream.channel.url, {
-                        type: 'basic',
-                        iconUrl: stream.channel.logo,
-                        title: stream.channel.display_name + "is online",
-                        message: "Click me to see the stream!"
-                    },
-                    function () { }
-                );
-            }
-        })
-    })
-}
 
 
-function openStreamLink(streamLink) {
-    window.open(streamLink, '_blank');
-};
 
-function isStreamOnline(notifiedList) {
-    var channels = "";
-    for (var object of notifiedList) {
-        channels += object['stream-name'] + ",";
-    }
-    var link = "https://api.twitch.tv/kraken/streams?stream_type=live&channel=" + channels;
-
-    link = link.slice(0, -1);
-    checkStreamsAjax(link);
-};
 
 // Favorite a stream
 var streamResults = document.getElementById('stream-results');
@@ -73,7 +36,6 @@ streamResults.addEventListener('click', function (evt) {
         obj['stream-name'] = data;
         obj['isNotified'] = false;
         notifiedList.push(obj);
-        isStreamOnline(notifiedList)
     }
     localStorage.setItem('favStreams', JSON.stringify(notifiedList));
 })
@@ -154,6 +116,7 @@ function getStreamList(options) {
                     for (var favoriteStream of notifiedList) {
                         console.log(favoriteStream)
                         var streamItem = document.querySelector('[data-stream-name="' + favoriteStream['stream-name'] + '"]');
+                        console.log(streamItem)
                         streamItem.classList.add('active-star');
                     }
                 }
@@ -189,8 +152,6 @@ selectBroadcasterLanguage.onchange = function (evt) {
     options.lang = broadcasterLanguage
     getStreamList(options);
 }
-
-chrome.notifications.onClicked.addListener(openStreamLink);
 
 loadPreferences();
 getStreamList(options);
