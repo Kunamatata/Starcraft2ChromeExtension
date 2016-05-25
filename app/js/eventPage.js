@@ -108,12 +108,8 @@ function getAllStreams() {
         response.json().then(function (res) {
             var currentLiveStreams = res.streams;
             setExtensionBadge(currentLiveStreams);
-            var previousLiveStreams = localStorage.getItem("previousLiveStreams");
             var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
             isStreamOnline(notifiedList)
-            // compareStreams(currentLiveStreams, JSON.parse(previousLiveStreams));
-
-            localStorage.setItem("previousLiveStreams", JSON.stringify(currentLiveStreams));
         })
     })
 };
