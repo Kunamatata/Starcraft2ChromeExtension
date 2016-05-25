@@ -1,9 +1,10 @@
 var liveStreams = [];
-// For chrome badge
-var grey = [66, 66, 66, 255]
-var green = [0, 255, 0, 255]
-var red = [255, 0, 0, 255]
+var starcraft2URL = 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=100';
 
+// For chrome badge
+var grey = [66, 66, 66, 255];
+var green = [0, 255, 0, 255];
+var red = [255, 0, 0, 255];
 
 /**
  * Formats numbers with k formatting ex: num = 1500 => 1.5k
@@ -43,10 +44,13 @@ function setExtensionBadge(streams) {
 }
 
 function getAllStreams() {
-    $.ajax({
-        url: 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=500',
-        dataType: 'json',
-        success: function (res) {
+    fetch(starcraft2URL).then(function (response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+                response.status);
+            return;
+        }
+        response.json().then(function (res) {
             var currentLiveStreams = res.streams;
             setExtensionBadge(currentLiveStreams);
             var previousLiveStreams = localStorage.getItem("previousLiveStreams");
@@ -54,12 +58,8 @@ function getAllStreams() {
             compareStreams(currentLiveStreams, JSON.parse(previousLiveStreams));
 
             localStorage.setItem("previousLiveStreams", JSON.stringify(currentLiveStreams));
-        },
-        error: function (res) {
-            console.log("Are you sure you are connected?");
-        },
-        timeout: 5000
-    });
+        })
+    })
 };
 
 function checkFavoriteStreams(streamDifference, favoriteList) {

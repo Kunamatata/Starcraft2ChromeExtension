@@ -16,13 +16,16 @@ body {
     height: 100%;
 }
 
+.stream-results{
+    min-height: 300px;
+}
+
 .stream {
     position: relative;
     height: 79px;
     background-color: #2B2F38;
     color: #fff;
-    opacity: 0;
-    transition: all .3s ease-out;
+    animation: fadeIn .5s ease-out forwards;
     padding: 5px 10px;
     border-top: 1px solid #ffffff;
     border-bottom: 1px solid #ffffff;
@@ -132,6 +135,18 @@ svg path{
     margin-top: 10px;
     margin-right: 5px;
     float: right;
+}
+
+#option-popup.visible, .visible{
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+}
+
+#option-popup.hidden, .hidden{
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
 }
 
 .stream-logo {
@@ -251,5 +266,14 @@ svg path{
     50% {
         transform: scale(1.0);
         -webkit-transform: scale(1.0);
+    }
+}
+
+@keyframes fadeIn{
+    0%{
+      opacity: 0;  
+    }
+    100%{
+        opacity: 1;
     }
 }
