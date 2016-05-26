@@ -19,8 +19,7 @@ var streamResults = document.getElementById('stream-results');
 
 
 
-// Favorite a stream
-var streamResults = document.getElementById('stream-results');
+// Favorite a streamItem
 streamResults.addEventListener('click', function (evt) {
     var item = evt.target;
     var data = item.getAttribute('data-stream-name');
@@ -57,7 +56,7 @@ function loadPreferences() {
     notifiedWhenOnline = JSON.parse(notifiedWhenOnline);
     checkBoxGetNotified.checked = notifiedWhenOnline;
     loadLanguagePreferences(options);
-};
+}
 
 // Create the DOM element for a stream
 function createStreamElement(stream, htmlContent) {
@@ -123,7 +122,7 @@ function getStreamList(options) {
                 document.getElementById('spinner').classList.add('hidden');
             })
         })
-};
+}
 
 
 var optionIcon = document.getElementById('option-icon');
@@ -138,7 +137,7 @@ optionIcon.addEventListener('click', function (evt) {
 closePopup.addEventListener('click', function (evt) {
     optionPopup.classList.remove('visible');
     optionPopup.classList.add('hidden');
-});
+})
 
 var selectBroadcasterLanguage = document.getElementById('select-broadcaster-language')
 

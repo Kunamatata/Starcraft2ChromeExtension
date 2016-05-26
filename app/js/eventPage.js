@@ -45,7 +45,7 @@ function setExtensionBadge(streams) {
 
 function openStreamLink(streamLink) {
     window.open(streamLink, '_blank');
-};
+}
 
 
 function checkFavoriteStreamChannels(link) {
@@ -96,7 +96,7 @@ function isStreamOnline(notifiedList) {
         link = link.slice(0, -1);
         checkFavoriteStreamChannels(link);
     }
-};
+}
 
 function getAllStreams() {
     fetch(starcraft2URL).then(function (response) {
@@ -112,12 +112,12 @@ function getAllStreams() {
             isStreamOnline(notifiedList)
         })
     })
-};
+}
 
 chrome.runtime.onStartup.addListener(function () {
     console.log('Extension started up...');
 
-});
+})
 
 chrome.notifications.onClicked.addListener(openStreamLink);
 
@@ -125,4 +125,4 @@ chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 1 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     getAllStreams()
-});
+})
