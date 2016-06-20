@@ -1,6 +1,8 @@
 var liveStreams = [];
 var starcraft2URL = 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=100';
 
+var openShiftSc2URL = "https://kuna-starcraft2.rhcloud.com/api/sc2/streams"
+
 // For chrome badge
 var grey = [66, 66, 66, 255];
 var green = [0, 255, 0, 255];
@@ -99,7 +101,7 @@ function isStreamOnline(notifiedList) {
 }
 
 function getAllStreams() {
-    fetch(starcraft2URL).then(function (response) {
+    fetch(openShiftSc2URL).then(function (response) {
         if (response.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' +
                 response.status);
