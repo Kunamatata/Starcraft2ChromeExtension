@@ -51,13 +51,16 @@ function openStreamLink(streamLink) {
 
 
 function checkFavoriteStreamChannels(link) {
-    fetch(link).then(function (response) {
+    var apiHeader = new Headers();
+    apiHeader.append('Client-ID','d70esgd3z7nrisyuznehtqp8l5a1qeu');
+    fetch(link, {headers: apiHeader}).then(function (response) {
         if (response.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' +
                 response.status);
             return;
         }
         response.json().then(function (res) {
+            console.log(res)
             for (var stream of res.streams) {
                 chrome.notifications.create(
                     stream.channel.url, {
@@ -76,6 +79,7 @@ function checkFavoriteStreamChannels(link) {
 function isStreamOnline(notifiedList) {
     var channels = "";
     var now = Date.now();
+    console.log(notifiedList)
     if (notifiedList != null) {
         notifiedList.forEach(function (object, index) {
             if (!object['isNotified']) {
@@ -94,9 +98,9 @@ function isStreamOnline(notifiedList) {
         })
         localStorage.setItem('favStreams', JSON.stringify(notifiedList));
         var link = "https://api.twitch.tv/kraken/streams?stream_type=live&channel=" + channels;
-
-        link = link.slice(0, -1);
-        checkFavoriteStreamChannels(link);
+        if(channels != ""){
+            checkFavoriteStreamChannels(link);
+        }
     }
 }
 
