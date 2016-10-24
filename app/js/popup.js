@@ -1,5 +1,7 @@
 "use strict";
 
+Raven.config('https://3e478e63aaae4ff6810ec83dc4b2bec1@sentry.io/107160').install()
+
 var liveStreams = [];
 var liveBroadcasterLanguageStreams = [];
 
@@ -107,9 +109,7 @@ function getStreamList(options) {
         streamResults.innerHTML = htmlContent;
         if (notifiedList != null) {
           for (var favoriteStream of notifiedList) {
-            console.log(favoriteStream)
             var streamItem = document.querySelector('[data-stream-name="' + favoriteStream['stream-name'] + '"]');
-            console.log(streamItem)
             streamItem.classList.add('active-star');
           }
         }

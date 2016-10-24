@@ -51,16 +51,15 @@ function openStreamLink(streamLink) {
 
 
 function checkFavoriteStreamChannels(link) {
-    var apiHeader = new Headers();
-    apiHeader.append('Client-ID','d70esgd3z7nrisyuznehtqp8l5a1qeu');
-    fetch(link, {headers: apiHeader}).then(function (response) {
+    fetch(link, {headers: {
+        'Client-ID' : 'd70esgd3z7nrisyuznehtqp8l5a1qeu'
+    }}).then(function (response) {
         if (response.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' +
                 response.status);
             return;
         }
         response.json().then(function (res) {
-            console.log(res)
             for (var stream of res.streams) {
                 chrome.notifications.create(
                     stream.channel.url, {
@@ -79,7 +78,6 @@ function checkFavoriteStreamChannels(link) {
 function isStreamOnline(notifiedList) {
     var channels = "";
     var now = Date.now();
-    console.log(notifiedList)
     if (notifiedList != null) {
         notifiedList.forEach(function (object, index) {
             if (!object['isNotified']) {
