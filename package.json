@@ -4,7 +4,8 @@
   "description": "Get your twitch starcraft 2 streams quickly and click the star to favorite your stream and get notified when they get online",
   "main": "popup.html",
   "scripts": {
-    "client": "webpack-dev-server --hot --inline"
+    "client": "webpack-dev-server --hot --inline",
+    "production": "webpack -p"
   },
   "repository": {
     "type": "git",

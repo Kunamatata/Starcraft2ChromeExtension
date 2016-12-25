@@ -32,6 +32,10 @@ var config = {
         test: /\.styl$/,
         exclude: /node_modules/,
         loader: 'style-loader!css-loader?sourceMap&modules&camelCase!stylus-loader'
+      },
+      { 
+        test: /\.png$/, 
+        loader: 'file?name=assets/[name].[ext]' 
       }
     ]
   }

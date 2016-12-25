@@ -11,14 +11,40 @@ class Stream extends React.Component {
     this.channelImage = {
       backgroundImage: null
     }
+    this.raceImage = {
+      backgroundImage: null
+    }
   }
 
   componentWillMount() {
     this.channelImage.backgroundImage = this.props.stream.channel.logo !== null ? `url(${this.props.stream.channel.logo})` : `url(${DEFAULT_LOGO})`
+    this.mapRace()
   }
 
   handleFavorite() {
-    // Add stream to favorite with 
+    // Add stream to favorite with google chrome extension API storage
+  }
+
+  mapRace() {
+    let race = this.props.stream.channel.status.match(/protoss|zerg|terran|toss/ig)
+    race = race ? race[0].toLowerCase() : ''
+    if (race)
+      switch (race) {
+        case 'protoss':
+          this.raceImage.backgroundImage = `url(${require('../../assets/protoss.png')})`
+          break;
+        case 'zerg':
+          this.raceImage.backgroundImage = `url(${require('../../assets/zerg.png')})`
+          break;
+        case 'terran':
+          this.raceImage.backgroundImage = `url(${require('../../assets/terran.png')})`
+          break;
+      }
+    else {
+      this.raceImage.width = 0
+      this.raceImage.height = 0
+      this.raceImage.display = "none"
+    }
   }
 
   render() {
@@ -31,6 +57,7 @@ class Stream extends React.Component {
         </div>
         <div className={style.streamDescription}>{this.props.stream.channel.status}</div>
         <div className={style.streamLogo} style={this.channelImage}></div>
+        <div className={style.raceImage} style={this.raceImage}></div>
       </div>
     )
   }
