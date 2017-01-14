@@ -8,8 +8,8 @@ import Stream from '../Stream/stream.jsx'
 const STARCRAFT_API = "https://kuna-starcraft2.rhcloud.com/api/sc2/streams"
 
 class StreamList extends React.Component {
-  
- constructor(){
+
+  constructor() {
     super()
     this.state = {
       streams: null
@@ -54,7 +54,9 @@ class StreamList extends React.Component {
     if (this.state.streams) {
       return (
         <div className={style.streamList}>
-          {this.state.streams.map((stream) => {
+          {this.state.streams.filter((stream) => {
+            return this.props.language === 'all' ? true : stream.channel.broadcaster_language === this.props.language
+          }).map((stream) => {
             return (<Stream key={stream._id} stream={stream} />)
           })}
         </div>

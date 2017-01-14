@@ -23,6 +23,7 @@ class Stream extends React.Component {
 
   handleFavorite() {
     // Add stream to favorite with google chrome extension API storage
+    console.log(chrome.storage)
   }
 
   mapRace() {
