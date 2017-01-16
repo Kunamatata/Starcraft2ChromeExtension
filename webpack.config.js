@@ -7,6 +7,7 @@ var APP_DIR = path.resolve(__dirname, 'src/client/app')
 var config = {
   entry: {
     javascript: APP_DIR + '/app.jsx',
+    background: APP_DIR + '/eventPage.js',
     html: APP_DIR + '/index.html'
   },
   output: {
@@ -22,6 +23,14 @@ var config = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['react-hot', 'babel-loader']
+      },
+      { 
+        test: /eventPage.js$/, 
+        loader: 'file?name=[name].[ext]' 
+      },
+      { 
+        test: /manifest.json$/, 
+        loader: 'file?name=[name].[ext]' 
       },
       {
         test: /\.html$/,

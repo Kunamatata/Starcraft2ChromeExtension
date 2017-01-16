@@ -14,17 +14,20 @@ class Stream extends React.Component {
     this.raceImage = {
       backgroundImage: null
     }
+    this.state = {
+      streamName: ''
+    }
   }
 
   componentWillMount() {
     this.channelImage.backgroundImage = this.props.stream.channel.logo !== null ? `url(${this.props.stream.channel.logo})` : `url(${DEFAULT_LOGO})`
     this.mapRace()
+
+    this.setState({
+      streamName: this.props.stream.channel.display_name
+    })
   }
 
-  handleFavorite() {
-    // Add stream to favorite with google chrome extension API storage
-    console.log(chrome.storage)
-  }
 
   mapRace() {
     let race = this.props.stream.channel.status.match(/protoss|zerg|terran|toss/ig)
@@ -50,9 +53,9 @@ class Stream extends React.Component {
 
   render() {
     return (
-      <div className={style.stream}>
+      <div className={style.stream} data-stream-name={this.props.stream.channel.display_name}>
         <div>
-          <span className={style.favoriteStar} onClick={this.handleFavorite}>⭑</span>
+          <span className={this.props.favorite === true ? style.favoriteStar + ' ' + style.active : style.favoriteStar} onClick={() => this.props.handleFavorite(this)}>⭑</span>
           <span>
             <a href={this.props.stream.channel.url} target="_blank">{this.props.stream.channel.display_name}</a> - {this.props.stream.viewers}</span>
         </div>
