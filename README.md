@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/Kunamatata/Starcraft2ChromeExtension.svg?branch=master)](https://travis-ci.org/Kunamatata/Starcraft2ChromeExtension)
 
-# Chrome Extension for Starcraft 2 Streams
----
-Get your favorite twitch stream, filter by language and favorite your favorite streamers. *Get notified with chrome notifications! Find your ranking as well
+# This extension is currently in a rewrite phase. Please check the rewrite branch
 
 # Chrome Extension for Starcraft 2 Streams
 
