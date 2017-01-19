@@ -44,51 +44,53 @@ class StreamList extends React.Component {
     });
   }
 
-getStreamList() {
-  fetch(STARCRAFT_API).then((response) => {
-    if (response.status !== 200) {
-      console.log('Looks like there was a problem. Status Code: ' +
-        response.status)
-      return
-    }
-    response.json().then((data) => {
-      this.setState({
-        streams: data.streams
-      });
+  getStreamList() {
+    fetch(STARCRAFT_API).then((response) => {
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status)
+        return
+      }
+      response.json().then((data) => {
+        this.setState({
+          streams: data.streams
+        });
+      })
     })
-  })
-}
+  }
 
-handleFavorite(stream) {
-  let favoriteStreams = this.state.favoriteStreams;
-  if (favoriteStreams.indexOf(stream.state.streamName) > -1) {
-    favoriteStreams.splice(favoriteStreams.indexOf(stream.state.streamName), 1)
+  handleFavorite(stream) {
+    let favoriteStreams = this.state.favoriteStreams;
+    if (favoriteStreams.indexOf(stream.state.streamName) > -1) {
+      favoriteStreams.splice(favoriteStreams.indexOf(stream.state.streamName), 1)
+    }
+    else {
+      favoriteStreams.push(stream.state.streamName);
+    }
+    this.setState({
+      favoriteStreams
+    });
+    chrome.storage.sync.set({ 'favoriteStreams': this.state.favoriteStreams }, () => {
+      console.log('saved');
+    });
   }
-  else {
-    favoriteStreams.push(stream.state.streamName);
-  }
-  this.setState({
-    favoriteStreams
-  });
-  chrome.storage.sync.set({ 'favoriteStreams': this.state.favoriteStreams }, () => {
-    console.log('saved');
-  });
-}
 
-render() {
-  if (this.state.streams) {
-    return (
-      <div className={style.streamList}>
-        {this.state.streams.filter((stream) => {
-          return this.props.language === 'all' ? true : stream.channel.broadcaster_language === this.props.language
-        }).map((stream) => {
-          return (<Stream key={stream._id} stream={stream} favorite={this.state.favoriteStreams.indexOf(stream.channel.display_name) > -1 ? true : false} handleFavorite={this.handleFavorite} />)
-        })}
-      </div>
-    )
+  render() {
+    if (this.state.streams) {
+      let streams = this.state.streams.filter((stream) => {
+        return this.props.language === 'all' ? true : stream.channel.broadcaster_language === this.props.language
+      })
+      
+      return (
+        <div className={style.streamList}>
+          {streams.length > 0 ? streams.map((stream) => {
+            return (<Stream key={stream._id} stream={stream} favorite={this.state.favoriteStreams.indexOf(stream.channel.display_name) > -1 ? true : false} handleFavorite={this.handleFavorite} />)
+          }) : <div className={style.noStreams}>Currently no live streams for this broadcast language</div>}
+        </div>
+      )
+    }
+    return (<div></div>)
   }
-  return (<div></div>)
-}
 }
 
 export default StreamList
