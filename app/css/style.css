@@ -16,7 +16,7 @@ body {
     height: 100%;
 }
 
-.stream-results{
+.stream-results {
     min-height: 300px;
 }
 
@@ -65,12 +65,12 @@ body {
     font-weight: bold;
 }
 
-span.first-row{
+span.first-row {
     display: flex;
     align-items: center;
 }
 
-svg path{
+svg path {
     fill: #00b6ff;
 }
 
@@ -138,13 +138,15 @@ svg path{
     float: right;
 }
 
-#option-popup.visible, .visible{
+#option-popup.visible,
+.visible {
     visibility: visible;
     opacity: 1;
     z-index: 1;
 }
 
-#option-popup.hidden, .hidden{
+#option-popup.hidden,
+.hidden {
     visibility: hidden;
     opacity: 0;
     z-index: -1;
@@ -171,6 +173,12 @@ svg path{
 
 .active-star {
     color: #f1c40f;
+}
+
+#error-message {
+    text-align: center;
+    color: #cc0000;
+    font-weight: bold;
 }
 
 
@@ -274,11 +282,11 @@ svg path{
     }
 }
 
-@keyframes fadeIn{
-    0%{
-      opacity: 0;  
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
     }
-    100%{
+    100% {
         opacity: 1;
     }
 }

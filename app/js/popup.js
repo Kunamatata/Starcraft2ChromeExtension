@@ -92,6 +92,7 @@ function getStreamList(options) {
       if (response.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ' +
           response.status);
+        document.getElementById('error-message').innerHTML = "There was a problem with the server. Author is working on a fix and migrating to a new server. Thank you for your patience"
         return;
       }
       response.json().then(function(res) {
