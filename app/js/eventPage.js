@@ -1,7 +1,7 @@
 var liveStreams = [];
 var starcraft2URL = 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=100';
 
-var openShiftSc2URL = "https://kuna-starcraft2.rhcloud.com/api/sc2/streams"
+var openShiftSc2URL = "http://ec2-54-237-197-248.compute-1.amazonaws.com/api/sc2/streams"
 
 // For chrome badge
 var grey = [66, 66, 66, 255];
