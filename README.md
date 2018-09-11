@@ -22,8 +22,6 @@ Dist is never pushed to github since it's something you can build
 5. Submit a pull request :D
 
 ## TODO
-1. Add a notification system with background event page.
 2. Structure code and make it cleaner
 3. Implement options such as getting notified or not / Themes etc...
 4. Find a name for the extension
-5. Find / Create an icon for the extension
