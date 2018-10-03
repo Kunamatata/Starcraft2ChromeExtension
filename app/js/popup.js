@@ -97,9 +97,12 @@ function getStreamList(options) {
       }
       response.json().then(function(res) {
         liveStreams = res.streams;
+        var favoriteNames = notifiedList.map(favoriteStream => favoriteStream['stream-name']);
+
         for (var stream of liveStreams) {
           if (language == "all" || stream.channel.broadcaster_language === language || stream.channel.language === language) {
-            liveBroadcasterLanguageStreams.push(stream);
+            if (favoriteNames.includes(stream.channel.display_name)) liveBroadcasterLanguageStreams.unshift(stream);
+            else liveBroadcasterLanguageStreams.push(stream);
           }
         }
         var htmlContent = '';
