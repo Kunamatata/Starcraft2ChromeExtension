@@ -3,15 +3,13 @@
 var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
 var babel = require('gulp-babel');
-var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify-es').default;
 var cleanCSS = require('gulp-clean-css');
 
 
 gulp.task('js', function () {
     return gulp.src('app/js/*.js')
-        .pipe(babel({
-            presets: ['es2015']
-        }))
+        .pipe(babel())
         .pipe(uglify())
         .pipe(gulp.dest('dist/js'))
 });
