@@ -44,13 +44,13 @@ gulp.task('manifest', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('app/css/**/*.css', ['css']);
-    gulp.watch('app/js/**/*.js', ['js']);
-    gulp.watch('app/popup.html', ['popup']);
-    gulp.watch('app/manifest.json', ['manifest']);
-    gulp.watch('app/img/**/*', ['img']);
+    gulp.watch('app/css/**/*.css', gulp.series('css'));
+    gulp.watch('app/js/**/*.js', gulp.series('js'));
+    gulp.watch('app/popup.html', gulp.series('popup'));
+    gulp.watch('app/manifest.json', gulp.series('manifest'));
+    gulp.watch('app/img/**/*', gulp.series('img'));
 });
 
-gulp.task('default', ['img', 'js', 'vendor', 'css', 'popup', 'manifest', 'watch']);
+gulp.task('default',  gulp.parallel('img', 'js', 'vendor', 'css', 'popup', 'manifest', 'watch'));
 
-gulp.task('build', ['img', 'js', 'vendor', 'css', 'popup', 'manifest']);
+gulp.task('build', gulp.parallel('img', 'js', 'vendor', 'css', 'popup', 'manifest'));
