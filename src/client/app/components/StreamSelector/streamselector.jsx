@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import style from './streamselector.styl'
 
-const supportedLanguages = [
+const regions = [
   { abbr: 'all', caption: "All" },
   { abbr: "en", caption: "English" },
   { abbr: "fr", caption: "French" },
