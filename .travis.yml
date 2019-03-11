@@ -1,9 +1,7 @@
 language: node_js
 node_js:
-    - "4.2"
-before_script:
-    - npm install -g gulp
-script: gulp build
+    - "11.10.0"
+script: npm run production
 cache:
   directories:
     - node_modules
