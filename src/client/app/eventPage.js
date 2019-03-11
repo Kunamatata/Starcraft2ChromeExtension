@@ -1,6 +1,8 @@
-var liveStreams = [];
+import config from './config/config'
 
-const STARCRAFT_API = "https://kuna-starcraft2.rhcloud.com/api/sc2/streams"
+const {STARCRAFT_API_URL} = config;
+
+var liveStreams = [];
 
 // For chrome badge
 var grey = [66, 66, 66, 255];
@@ -102,7 +104,7 @@ function isStreamOnline(notifiedList) {
 }
 
 function getStreamList() {
-  fetch(STARCRAFT_API).then((response) => {
+  fetch(STARCRAFT_API_URL).then((response) => {
     if (response.status !== 200) {
       console.log('Looks like there was a problem. Status Code: ' +
         response.status)

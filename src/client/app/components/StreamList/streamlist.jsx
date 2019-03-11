@@ -1,11 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 import style from './streamlist.styl'
-
 import Stream from '../Stream/stream.jsx'
-
-const STARCRAFT_API = "https://kuna-starcraft2.rhcloud.com/api/sc2/streams"
 
 class StreamList extends React.Component {
 
@@ -21,13 +17,13 @@ class StreamList extends React.Component {
   componentWillMount() {
     this.getStreamList()
     // this.getStreamDummyList()
-    chrome.storage.sync.get('favoriteStreams', (items) => {
-      if (items.favoriteStreams === undefined)
-        items.favoriteStreams = [];
-      this.setState({
-        favoriteStreams: items.favoriteStreams
-      });
-    })
+    // chrome.storage.sync.get('favoriteStreams', (items) => {
+    //   if (items.favoriteStreams === undefined)
+    //     items.favoriteStreams = [];
+    //   this.setState({
+    //     favoriteStreams: items.favoriteStreams
+    //   });
+    // })
   }
 
   componentDidMount() {
@@ -45,7 +41,7 @@ class StreamList extends React.Component {
   }
 
   getStreamList() {
-    fetch(STARCRAFT_API).then((response) => {
+    fetch(this.props.STARCRAFT_API_URL).then((response) => {
       if (response.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ' +
           response.status)
@@ -70,9 +66,9 @@ class StreamList extends React.Component {
     this.setState({
       favoriteStreams
     });
-    chrome.storage.sync.set({ 'favoriteStreams': this.state.favoriteStreams }, () => {
-      console.log('saved');
-    });
+    // chrome.storage.sync.set({ 'favoriteStreams': this.state.favoriteStreams }, () => {
+    //   console.log('saved');
+    // });
   }
 
   render() {

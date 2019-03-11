@@ -54,7 +54,7 @@ class Stream extends React.Component {
   render() {
     return (
       <div className={style.stream} data-stream-name={this.props.stream.channel.display_name}>
-        <div>
+        <div className={style.username}>
           <span className={this.props.favorite === true ? style.favoriteStar + ' ' + style.active : style.favoriteStar} onClick={() => this.props.handleFavorite(this)}>⭑</span>
           <span>
             <a href={this.props.stream.channel.url} target="_blank">{this.props.stream.channel.display_name}</a> - {this.props.stream.viewers}</span>
