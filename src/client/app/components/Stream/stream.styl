@@ -3,15 +3,17 @@
 
 .stream
   display grid
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 0.5fr 1fr
   grid-template-areas "username racelogo logo" "description description ."
   grid-template-rows: 35px minmax(40px, 1fr)
   color rgb(224, 224, 224)
   background  #2B2F38
   padding 5px
-  font-size: 1em;
+  font-size: 1em
   border-bottom: 2px solid rgb(224, 224, 224)
   align-items: center
+  &:last-child
+    border-bottom none
 
 
 .username
@@ -32,7 +34,7 @@
   grid-area logo
   align-self center
   justify-self end
-  grid-row: 1 / span 2;
+  grid-row: 1 / span 2
   width 50px
   height 50px
   background-position center
@@ -49,7 +51,7 @@
   grid-column 2 / span 3
   justify-self: center
   align-self: center
-  margin-left: 5em;
+  margin-left: 5em
   background-position center
   background-size contain
   background-repeat no-repeat
