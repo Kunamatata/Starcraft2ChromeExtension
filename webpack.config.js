@@ -12,7 +12,6 @@ console.log(APP_DIR)
 var config = {
   entry: {
     app: APP_DIR + '/app.jsx',
-    background: APP_DIR + '/eventPage.js'
   },
   output: {
     path: BUILD_DIR,
@@ -29,13 +28,8 @@ var config = {
       },
       {
         test: /eventPage.js$/,
-        loader: 'file-loader?name=[name].[ext]'
+        loader: 'babel-loader?file-loader?name=[name].[ext]'
       },
-      // {
-      //   test: /\.html$/,
-      //   exclude: /node_modules/,
-      //   loader: 'html-loader?name=[name].[ext]'
-      // },
       {
         test: /\.styl$/,
         exclude: /node_modules/,
