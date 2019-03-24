@@ -11,6 +11,7 @@ console.log(APP_DIR)
 
 var config = {
   entry: {
+    eventPage: APP_DIR + '/eventPage.js',
     app: APP_DIR + '/app.jsx',
   },
   output: {
@@ -25,10 +26,6 @@ var config = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-      },
-      {
-        test: /eventPage.js$/,
-        loader: 'babel-loader?file-loader?name=[name].[ext]'
       },
       {
         test: /\.styl$/,
