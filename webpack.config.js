@@ -1,52 +1,65 @@
-var webpack = require('webpack')
-var path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var CopyWebPackPlugin = require('copy-webpack-plugin')
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebPackPlugin = require('copy-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-var BUILD_DIR = path.resolve(__dirname, 'dist')
-console.log(BUILD_DIR)
-var APP_DIR = path.resolve(__dirname, 'src/client/app')
-console.log(APP_DIR)
+const BUILD_DIR = path.resolve(__dirname, 'dist');
+console.log(BUILD_DIR);
+const APP_DIR = path.resolve(__dirname, 'src/client/app');
+console.log(APP_DIR);
 
-var config = {
+const config = {
   entry: {
-    eventPage: APP_DIR + '/eventPage.js',
-    app: APP_DIR + '/app.jsx',
+    eventPage: `${APP_DIR}/eventPage.js`,
+    app: `${APP_DIR}/app.jsx`,
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].js'
+    filename: '[name].js',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json'],
   },
   module: {
     rules: [{
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.styl$/,
-        exclude: /node_modules/,
-        loader: 'style-loader!css-loader?sourceMap&modules&camelCase!stylus-loader'
-      },
-      {
-        test: /\.png$/,
-        loader: 'file-loader?name=assets/[name].[ext]'
-      }
-    ]
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      use: ['babel-loader'],
+    },
+    {
+      test: /\.svg$/,
+      exclude: /node_modules/,
+      use: [
+        { loader: 'babel-loader' },
+        {
+          loader: 'react-svg-loader',
+          options: {
+            jsx: true,
+          },
+        },
+      ],
+    },
+    {
+      test: /\.styl$/,
+      exclude: /node_modules/,
+      loader: 'style-loader!css-loader?sourceMap&modules&camelCase!stylus-loader',
+    },
+    {
+      test: /\.png$/,
+      loader: 'file-loader?name=assets/[name].[ext]',
+    },
+    ],
   },
   plugins: [new HtmlWebpackPlugin({
-      inject: 'body',
-      template: APP_DIR + '/index.html'
-    }),
-    new CopyWebPackPlugin([{ from: APP_DIR + '/manifest.json' }]),
+    inject: 'body',
+    template: `${APP_DIR}/index.html`,
+  }),
+  new CopyWebPackPlugin([{ from: `${APP_DIR}/manifest.json` }]),
     // new BundleAnalyzerPlugin({
     //     analyzerPort: 8889,
     // }),
-  ]
-}
+  ],
+};
 
-module.exports = config
+module.exports = config;
