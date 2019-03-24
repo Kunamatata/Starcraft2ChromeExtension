@@ -9,7 +9,7 @@ class StreamList extends React.Component {
     super()
     this.state = {
       streams: null,
-      favoriteStreams: []
+      favoriteStreams: {}
     }
     this.abortController = new AbortController();
     this.handleFavorite = this.handleFavorite.bind(this)
@@ -18,11 +18,8 @@ class StreamList extends React.Component {
   componentDidMount() {
     // this.getStreamDummyList()
     chrome.storage.sync.get('favoriteStreams', (items) => {
-      if (items.favoriteStreams === undefined)
-        items.favoriteStreams = [];
-      this.setState({
-        favoriteStreams: items.favoriteStreams
-      });
+      
+      this.setState({favoriteStreams: items.favoriteStreams || {}})
     })
     this.startPoll();
   }
@@ -34,7 +31,7 @@ class StreamList extends React.Component {
 
   startPoll() {
     this.getStreamList();
-    this.timer = setTimeout(() => this.startPoll(), 6000)
+    this.timer = setTimeout(() => this.startPoll(), 20000)
   }
 
   getStreamDummyList() {
@@ -61,16 +58,24 @@ class StreamList extends React.Component {
   }
 
   handleFavorite(stream) {
+    console.log(stream)
     let favoriteStreams = this.state.favoriteStreams;
-    if (favoriteStreams.indexOf(stream.state.streamName) > -1) {
-      favoriteStreams.splice(favoriteStreams.indexOf(stream.state.streamName), 1)
+    const { streamName } = stream.state;
+    if (favoriteStreams[streamName]) {
+      delete favoriteStreams[streamName]
     }
     else {
-      favoriteStreams.push(stream.state.streamName);
+      favoriteStreams[streamName] = {
+        "streamName": stream.state.streamName,
+        "url": stream.state.url,
+        "logo": stream.state.logo,
+        "lastNotificationDate": Date.now()
+      };
     }
     this.setState({
       favoriteStreams
     });
+    
     chrome.storage.sync.set({ 'favoriteStreams': this.state.favoriteStreams }, () => {
       console.log('saved');
     });
@@ -78,7 +83,6 @@ class StreamList extends React.Component {
 
   render() {
     let {streams = null } = this.state;
-    
     if (streams !== null) {
       streams = streams.filter((stream) => {
         return this.props.language === 'all' ? true : stream.channel.broadcaster_language === this.props.language
@@ -88,7 +92,7 @@ class StreamList extends React.Component {
         <div className={style.streamList}>
           {streams.length > 0 ? streams.map((stream) => {
             return (
-            <Stream key={stream._id} stream={stream} favorite={this.state.favoriteStreams.indexOf(stream.channel.display_name) > -1 ? true : false} handleFavorite={this.handleFavorite} />
+            <Stream key={stream._id} stream={stream} favorite={this.state.favoriteStreams[stream.channel.display_name] ? true : false} handleFavorite={this.handleFavorite} />
             )
           }) : <div className={style.noStreams}>Currently no live streams for this broadcast language</div>}
         </div>

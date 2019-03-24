@@ -15,7 +15,9 @@ class Stream extends React.Component {
       backgroundImage: null
     }
     this.state = {
-      streamName: ''
+      streamName: '',
+      url: '',
+      logo: '',
     }
   }
 
@@ -24,7 +26,9 @@ class Stream extends React.Component {
     this.mapRace()
 
     this.setState({
-      streamName: this.props.stream.channel.display_name
+      streamName: this.props.stream.channel.display_name,
+      url: this.props.stream.channel.url,
+      logo: this.props.stream.channel.logo
     })
   }
 

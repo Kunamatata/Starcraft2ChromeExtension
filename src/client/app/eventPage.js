@@ -2,8 +2,6 @@ import config from './config/config'
 
 const {STARCRAFT_API_URL} = config;
 
-var liveStreams = [];
-
 // For chrome badge
 var grey = [66, 66, 66, 255];
 var green = [0, 255, 0, 255];
@@ -43,62 +41,74 @@ function setExtensionBadge(streams) {
     }
 
     chrome.browserAction.setBadgeText({ text: kNumberFormatter(viewerCount) });
-
 }
 
 function openStreamLink(streamLink) {
+    console.log(streamLink)
     window.open(streamLink, '_blank');
 }
 
 
-function checkFavoriteStreamChannels(link) {
-    fetch(link, {headers: {
-        'Client-ID' : 'd70esgd3z7nrisyuznehtqp8l5a1qeu'
-    }}).then(function (response) {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-        response.json().then(function (res) {
-            for (var stream of res.streams) {
-                chrome.notifications.create(
-                    stream.channel.url, {
-                        type: 'basic',
-                        iconUrl: stream.channel.logo,
-                        title: stream.channel.display_name + "is online",
-                        message: "Click me to see the stream!"
-                    },
-                    function () { }
-                );
+function createStreamNotification(streams) {
+    console.log("notifying")
+    Object.keys(stream).forEach(key => {
+        const stream = streams[key]
+        chrome.notifications.create(
+            stream.url, {
+                type: 'basic',
+                iconUrl: stream.logo,
+                title: key + "is online",
+                message: "Click me to see the stream!"
+            },
+            (notificationId) =>  { 
+                console.log(notificationId)
             }
-        })
-    })
+        );
+    });
 }
 
-function isStreamOnline(notifiedList) {
-    var channels = "";
-    var now = Date.now();
-    if (notifiedList != null) {
-        notifiedList.forEach(function (object, index) {
-            if (!object['isNotified']) {
-                channels += object['stream-name'] + ',';
-                notifiedList[index]['isNotified'] = true;
-                notifiedList[index]['notificationDate'] = new Date();
+function isStreamOnline(favoriteStreams, streams) {
+    const now = Date.now();
+    if (favoriteStreams != null) {
+        const streamsToNotify = Object.keys(favoriteStreams).reduce((prev, curr) =>
+        {
+            if ((now - favoriteStreams[curr].lastNotificationDate) >= 60 * 60 * 1000)
+            {
+                console.log(now - favoriteStreams[curr].lastNotificationDate)
+                console.log(curr)
+                prev[curr] = favoriteStreams[curr];
             }
-            else {
-                var pastNotificationTime = new Date(notifiedList[index]['notificationDate'])
-                //Every hour reset notifications to be sent out
-                if (now - pastNotificationTime.getTime() >= 3600000) {
-                    notifiedList[index]['isNotified'] = false;
-                    channels += object['stream-name'] + ','
-                }
+            return prev;
+        }, {});
+        console.log('Streams to notify from favoriteStreams')
+        console.log(streamsToNotify)
+
+        const liveStreams = streams.reduce((prev, curr) => {
+            prev[curr.channel.display_name] = curr.channel.display_name; 
+            return prev;
+        }, {})
+        console.log('live streams')
+        console.log(liveStreams)
+
+        const liveStreamsToNotify = Object.keys(streamsToNotify).reduce((prev, curr) => {
+            if(liveStreams.hasOwnProperty(curr))
+            {
+                streamsToNotify[curr].lastNotificationDate = now;
+                prev[curr] = streamsToNotify[curr];
             }
-        })
-        localStorage.setItem('favStreams', JSON.stringify(notifiedList));
-        var link = "https://api.twitch.tv/kraken/streams?stream_type=live&channel=" + channels;
-        if(channels != ""){
-            checkFavoriteStreamChannels(link);
+            return prev;
+        }, {})
+
+        if(Object.keys(liveStreamsToNotify).length !== 0){
+            console.log('live streams to notify')
+            console.log(liveStreamsToNotify)
+    
+            console.log("spread object")
+            chrome.storage.sync.set({favoriteStreams: {...favoriteStreams, ...liveStreamsToNotify}}, () => {
+                console.log('saved')
+            });
+ 
+            createStreamNotification(liveStreamsToNotify);
         }
     }
 }
@@ -111,11 +121,18 @@ function getStreamList() {
       return
     }
     response.json().then((data) => {
-      console.log(data.streams)
-      setExtensionBadge(data.streams)
+    const { streams } = data;
+      setExtensionBadge(streams)
+      chrome.storage.sync.get('favoriteStreams', result => {
+          console.log(result)
+        const {favoriteStreams} = result;
+        isStreamOnline(favoriteStreams, streams)
+      });
     })
   })
 }
+
+chrome.notifications.onClicked.addListener(openStreamLink);
 
 chrome.alarms.create("ajax", { delayInMinutes: 0, periodInMinutes: 1 });
 
@@ -123,4 +140,4 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     getStreamList()
 })
 
-getStreamList()
+getStreamList();
