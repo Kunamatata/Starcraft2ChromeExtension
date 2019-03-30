@@ -5,7 +5,8 @@
   "main": "popup.html",
   "scripts": {
     "client": "webpack-dev-server --hot --inline",
-    "production": "webpack -p"
+    "production": "webpack --env.NODE_ENV=production -p",
+    "dev": "webpack --env.NODE_ENV=dev"
   },
   "repository": {
     "type": "git",
