@@ -10,6 +10,7 @@ class StreamList extends React.Component {
       streams: null,
       favoriteStreams: {},
     };
+    this.timer = null;
     this.abortController = new AbortController();
     this.handleFavorite = this.handleFavorite.bind(this);
   }
@@ -72,8 +73,7 @@ class StreamList extends React.Component {
     this.setState({
       favoriteStreams,
     });
-
-    chrome.storage.sync.set({ favoriteStreams: this.state.favoriteStreams }, () => {
+    chrome.storage.sync.set({ favoriteStreams }, () => {
       console.log('saved');
     });
   }

@@ -17,8 +17,7 @@
         "notifications",
         "storage",
         "alarms",
-        "http://*/*",
-        "https://*/*"
+        "https://static-cdn.jtvnw.net/*"
     ],
-    "content_security_policy": "script-src 'self' https://cdn.ravenjs.com/ https://ssl.google-analytics.com; object-src 'self'"
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

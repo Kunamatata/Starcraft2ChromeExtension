@@ -46,7 +46,7 @@ function openStreamLink(streamLink) {
 
 function createStreamNotification(streams) {
   console.log('notifying');
-  Object.keys(stream).forEach((key) => {
+  Object.keys(streams).forEach((key) => {
     const stream = streams[key];
     chrome.notifications.create(
       stream.url, {
@@ -126,7 +126,7 @@ function getStreamList() {
 
 chrome.notifications.onClicked.addListener(openStreamLink);
 
-chrome.alarms.create('ajax', { delayInMinutes: 0, periodInMinutes: 1 });
+chrome.alarms.create('ajax', { delayInMinutes: 1, periodInMinutes: 1 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   getStreamList();
