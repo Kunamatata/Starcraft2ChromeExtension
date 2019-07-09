@@ -17,7 +17,7 @@ var PREFERED_LANGUAGE = "broadcasterLanguage"
 
 var streamResults = document.getElementById('stream-results');
 
-var amazonSC2Server = 'http://bewareofcat.asuscomm.com:3000/api/sc2/streams'
+var amazonSC2Server = 'https://bewareofcat.asuscomm.com/api/sc2/streams'
 var starcraft2URL = 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=100'
 
 

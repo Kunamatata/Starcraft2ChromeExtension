@@ -1,7 +1,7 @@
 var liveStreams = [];
 var starcraft2URL = 'https://api.twitch.tv/kraken/streams?game=StarCraft+II&limit=100';
 
-var amazonSC2Server = "http://bewareofcat.asuscomm.com:3000/api/sc2/streams"
+var amazonSC2Server = "https://bewareofcat.asuscomm.com/api/sc2/streams"
 
 // For chrome badge
 var grey = [66, 66, 66, 255];
