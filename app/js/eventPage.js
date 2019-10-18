@@ -21,13 +21,11 @@ function kNumberFormatter(num) {
  * @param {array} streams this is an array with all the streams received by the ajax request
  */
 function setExtensionBadge(streams) {
-
     // Get the stream with the highest number of viewers
     var stream = streams.reduce(function (prev, curr) {
-        return prev.viewers < curr.viewers ? curr : prev
+        return prev.viewer_count < curr.viewer_count ? curr : prev
     })
-
-    var viewerCount = stream.viewers
+    var viewerCount = stream.viewer_count
 
     chrome.browserAction.setBadgeBackgroundColor({ color: [0, 255, 0, 255] });
 
@@ -65,7 +63,7 @@ function checkFavoriteStreamChannels(link) {
                     stream.channel.url, {
                         type: 'basic',
                         iconUrl: stream.channel.logo,
-                        title: stream.channel.display_name + "is online",
+                        title: stream.user_name + "is online",
                         message: "Click me to see the stream!"
                     },
                     function () { }
@@ -110,7 +108,7 @@ function getAllStreams() {
             return;
         }
         response.json().then(function (res) {
-            var currentLiveStreams = res.streams;
+            var currentLiveStreams = res.data;
             setExtensionBadge(currentLiveStreams);
             var notifiedList = JSON.parse(localStorage.getItem("favStreams"));
             isStreamOnline(notifiedList)
