@@ -1,6 +1,6 @@
 {
   "name": "starcraft2chromextension",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "description": "Get your twitch starcraft 2 streams quickly and click the star to favorite your stream and get notified when they get online",
   "main": "popup.html",
   "scripts": {

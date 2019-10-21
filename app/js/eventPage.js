@@ -62,7 +62,7 @@ function checkFavoriteStreamChannels(link) {
                 chrome.notifications.create(
                     stream.channel.url, {
                         type: 'basic',
-                        iconUrl: stream.channel.logo,
+                        iconUrl: stream.profile_image_url,
                         title: stream.user_name + "is online",
                         message: "Click me to see the stream!"
                     },
